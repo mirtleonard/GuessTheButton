@@ -1,0 +1,43 @@
+<html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container text-center">
+    <h1>Guess the Button:</h1>
+    <div class="container my-5">
+      <h2>Choose the number of buttons</h2>
+      <input id="numberOfButtons" type="number" name="choose" value="3">
+      <button onclick = "start()" class="btn btn-success" >Start Game</button>
+    </div>
+    <div id = "button">
+    </div>
+  </div>
+  <script>
+    var x, y = 0;
+    function start() {
+      x = document.getElementById("numberOfButtons");
+      if (x.value > 10000 || x.value <= 0) {
+        alert("Nu putem genera numarul de butoane introdus!");
+        return;
+      }
+      while (y < x.value) {
+        var text = "Button " + y;
+        var button = "<button id = \" " + y + "\" onclick = \"goodButton(id)\" class=\"btn btn-success m-5\" > button " + y + " </button>";
+        document.getElementById("button").innerHTML += button;
+        y++;
+      }
+    }
+
+    function goodButton(id) {
+      console.log(id);
+      if (Math.floor(Math.random() * y) == id) {
+        alert("Win!\n Congratulations, this is the right button!");
+      } else {
+        alert("Try again!");
+      }
+      location.reload();
+    }
+  </script>
+</body>
+</html>
