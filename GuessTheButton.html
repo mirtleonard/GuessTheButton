@@ -1,6 +1,8 @@
-<html>
+<html >
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
   <div class="container text-center">
@@ -8,36 +10,77 @@
     <div class="container my-5">
       <h2>Choose the number of buttons</h2>
       <input id="numberOfButtons" type="number" name="choose" value="3">
-      <button onclick = "start()" class="btn btn-success" >Start Game</button>
+      <button onclick = "start()" class="btn btn-success">Start Game</button>
     </div>
     <div id = "button">
     </div>
   </div>
-  <script>
-    var x, y = 0;
-    function start() {
-      x = document.getElementById("numberOfButtons");
-      if (x.value > 10000 || x.value <= 0) {
-        alert("Nu putem genera numarul de butoane introdus!");
-        return;
-      }
-      while (y < x.value) {
-        var text = "Button " + y;
-        var button = "<button id = \" " + y + "\" onclick = \"goodButton(id)\" class=\"btn btn-success m-5\" > button " + y + " </button>";
-        document.getElementById("button").innerHTML += button;
-        y++;
-      }
-    }
 
-    function goodButton(id) {
-      console.log(id);
-      if (Math.floor(Math.random() * y) == id) {
-        alert("Win!\n Congratulations, this is the right button!");
-      } else {
-        alert("Try again!");
-      }
-      location.reload();
+
+  <div class="modal" id="winModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h4 class="modal-title">Congratulations, you win!</h4>
+        </div>
+
+        <div class="modal-body">
+          This is the right button!
+        </div>
+
+        <div class="modal-footer">
+          <button onclick="location.reload()" type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="loseModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h4 class="modal-title">Try again!</h4>
+        </div>
+
+        <div class="modal-body">
+          This is the wrong button!
+        </div>
+
+        <div class="modal-footer">
+          <button onclick="location.reload()" type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <script>
+
+  var x, win, buttons = 0;
+  function start() {
+    x = document.getElementById("numberOfButtons");
+    if (x.value > 10000 || x.value <= 0) {
+      alert("Nu putem genera numarul de butoane introdus!");
+      return;
     }
+    while (buttons < x.value) {
+      var text = "Button " + buttons;
+      var button = "<button id = \" " + buttons + "\" onclick = \"goodButton(id)\" class=\"btn btn-success m-5\" > button " + buttons + " </button>";
+      document.getElementById("button").innerHTML += button;
+      buttons++;
+    }
+    win = Math.floor(Math.random() * buttons);
+  }
+
+  function goodButton(id) {
+    if (win == id) {
+      $("#winModal").modal();
+    } else {
+      $("#loseModal").modal();
+    }
+  }
   </script>
 </body>
 </html>
