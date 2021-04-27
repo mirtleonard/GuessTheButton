@@ -1,4 +1,4 @@
-<html >
+<html>
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -17,7 +17,7 @@
   </div>
 
 
-  <div class="modal" id="winModal" role="dialog">
+  <div class="modal" id="modal" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
 
@@ -37,50 +37,36 @@
     </div>
   </div>
 
-  <div class="modal" id="loseModal" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-
-        <div class="modal-header">
-          <h4 class="modal-title">Try again!</h4>
-        </div>
-
-        <div class="modal-body">
-          This is the wrong button!
-        </div>
-
-        <div class="modal-footer">
-          <button onclick="location.reload()" type="button" class="btn btn-success" data-dismiss="modal">Close</button>
-        </div>
-
-      </div>
-    </div>
-  </div>
   <script>
-
   var x, win, buttons = 0;
   function start() {
     x = document.getElementById("numberOfButtons");
     if (x.value > 10000 || x.value <= 0) {
-      alert("Nu putem genera numarul de butoane introdus!");
+      $(".modal-title").text("Error");
+      $(".modal-body").text("We can't generate the number of buttons.");
+      $("#modal").modal();
       return;
     }
     while (buttons < x.value) {
       var text = "Button " + buttons;
-      var button = "<button id = \" " + buttons + "\" onclick = \"goodButton(id)\" class=\"btn btn-success m-5\" > button " + buttons + " </button>";
+      var button = "<button id = \"" + buttons + "\" onclick = \"checkButton(id)\" class=\"btn btn-success m-5\" > button " + buttons + " </button>";
       document.getElementById("button").innerHTML += button;
       buttons++;
     }
     win = Math.floor(Math.random() * buttons);
   }
 
-  function goodButton(id) {
+  function checkButton(id) {
     if (win == id) {
-      $("#winModal").modal();
+      $(".modal-title").text("Congratulations!");
+      $(".modal-body").text("This is the right button.");
+      $("#modal").modal();
     } else {
-      $("#loseModal").modal();
+      $(".modal-title").text("Try again!");
+      $(".modal-body").text("This is the wrong button.");
+      $("#modal").modal();
     }
   }
-  </script>
+</script>
 </body>
 </html>
